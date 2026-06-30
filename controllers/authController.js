@@ -49,20 +49,20 @@ const login = async (req,res) => {
         }
         const token = jwt.sign({
             id:user._id
-        },process.env.SECRET_KEY,{expiresIn:"1d"})
+        },process.env.SECRET_KEY,{expiresIn:"5000m"})
 
         res.json({
             success:true,
             message:"Login Succes",
             token,
-            data:user
-        })
+            data:user        })
     }
     catch(err){
+        console.log(err);
         res.status(500).json({
             success:false,
             message:"Unable to Login",
-            error:err
+            error:err.message
         });
     }
 };
@@ -75,6 +75,11 @@ const profile = (req,res) => {
     })
 };
 
-const logout = () =>{};
+const logout = (req,res) =>{
+    res.json({
+        success:true,
+        message:"Please delete token"
+    })
+};
 
 module.exports = {register, login, profile, logout};
